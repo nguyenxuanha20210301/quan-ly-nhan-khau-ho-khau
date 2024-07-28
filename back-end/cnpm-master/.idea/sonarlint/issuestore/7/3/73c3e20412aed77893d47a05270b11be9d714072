@@ -1,0 +1,27 @@
+
+y
+java:S1488>"\Immediately return this expression instead of assigning it to the temporary variable "user".(·Ûç’8…Öëõ®1
+J
+java:S1172="-Remove this unused method parameter "userId".(Á”Á‰8»ñíõ®1
+X	java:S125>"<This block of commented-out lines of code should be removed.(·Ûç’8»ñíõ®1
+]	java:S125F"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8Ýÿ€ö®1
+e
+java:S1128"HRemove this unused import 'com.fasterxml.jackson.databind.ObjectMapper'.(´‘¨™8Ááæ€¯1
+b
+java:S1128"@Remove this unused import 'io.jsonwebtoken.ExpiredJwtException'.(ÀÅÁ³ûÿÿÿÿ8Ááæ€¯1
+b
+java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ8Âáæ€¯1
+Ž
+java:S1128"lRemove this unused import 'org.springframework.security.authentication.UsernamePasswordAuthenticationToken'.(ÖÆ„Ùüÿÿÿÿ8Âáæ€¯1
+y
+java:S1128"\Remove this unused import 'org.springframework.security.core.context.SecurityContextHolder'.(ŒÄæë8Âáæ€¯1
+s
+java:S1128"VRemove this unused import 'org.springframework.security.core.userdetails.UserDetails'.(ÊÁ¥8Âáæ€¯1
+ˆ
+java:S1128"kRemove this unused import 'org.springframework.security.web.authentication.WebAuthenticationDetailsSource'.(¨ •À8Âáæ€¯1
+H
+java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8Âáæ€¯1
+M
+java:S1144="0Remove this unused private "getUserById" method.(Á”Á‰8ßÿ€ö®1
+R
+java:S1144y"6Remove this unused private "getJwtFromRequest" method.(›˜Ì8ßÿ€ö®1

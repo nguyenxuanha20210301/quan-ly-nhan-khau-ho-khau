@@ -1,0 +1,22 @@
+.content{
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+}
+.content h1{
+    /* style={{color: 'black', fontSize: '24px', fontWeight:'bold', textAlign:'center'}} */
+    color: 'black';
+    font-size: '24px';
+    font-weight: 'bold';
+    text-align: center;
+}
+.header, .footer{
+    height: 40;
+    backgroundColor: "lightskyblue";
+    color: "white";
+    display: "flex";
+    justifyContent: "center";
+    alignItems: "center";
+    fontWeight: "bold";
+}

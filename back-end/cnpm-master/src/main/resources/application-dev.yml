@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    default:
+      url: jdbc:mariadb://localhost:3306/cnpm?allowMultiQueries=true&useLegacyDatetimeCode=false&sessionVariables=time_zone='+09:00'
+      username: root
+      password: Linh1002@
+      driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

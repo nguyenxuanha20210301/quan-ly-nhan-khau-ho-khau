@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.cnpm.api.persistence.mapper.ResidentMapper">
+
+    <resultMap id="residentRes" type="org.cnpm.api.controller.dto.res.ResidentRes">
+        <result column="id" property="id"/>
+        <result column="p_id" property="pId"/>
+        <result column="m_id" property="mId"/>
+        <result column="full_name" property="fullName"/>
+        <result column="date_of_birth" property="dateOfBirth"/>
+        <result column="hometown" property="hometown"/>
+        <result column="ethnicity" property="ethnicity"/>
+        <result column="occupation" property="occupation"/>
+        <result column="place_of_employment" property="placeOfEmployment"/>
+        <result column="cccd" property="cccd"/>
+        <result column="date_of_issue_and_place_of_issue" property="dateOfIssueAndPlaceOfIssue"/>
+        <result column="date_of_registration_for_permanent_residence" property="dateOfRegistrationForPermanentResidence"/>
+        <result column="previous_place_of_permanent_residence" property="previousPlaceOfPermanentResidence"/>
+        <result column="household_id" property="householdId"/>
+        <result column="relationship" property="relationship"/>
+    </resultMap>
+
+    <insert id="insertResident" parameterType="org.cnpm.api.persistence.dto.ResidentReq">
+        INSERT INTO resident
+        (
+        p_id,
+        m_id,
+        full_name,
+        date_of_birth,
+        hometown,
+        ethnicity,
+        occupation,
+        place_of_employment,
+        cccd,
+        date_of_issue_and_place_of_issue,
+        date_of_registration_for_permanent_residence,
+        previous_place_of_permanent_residence,
+        household_id,
+        relationship
+        )
+        VALUES
+        (
+        #{pId},
+        #{mId},
+        #{fullName},
+        #{dateOfBirth},
+        #{hometown},
+        #{ethnicity},
+        #{occupation}
+        #{placeOfEmployment},
+        #{cccd},
+        #{dateOfIssueAndPlaceOfIssue},
+        #{dateOfRegistrationForPermanentResidence},
+        #{previousPlaceOfPermanentResidence},
+        #{householdId},
+        #{relationship}
+        )
+    </insert>
+
+    <update id="updateResident" parameterType="org.cnpm.api.persistence.dto.ResidentReq">
+        UPDATE INTO resident
+        SET
+        <if test="null != pId and pId != 0">
+        p_id = #{pId},
+        </if>
+        <if test="null != mId and mId != 0">
+        m_id = #{mId},
+        </if>
+        <if test="null != fullName and pId != ''">
+        full_name = #{fullName},
+        </if>
+        <if test="null != dateOfBirth and dateOfBirth != ''">
+        date_of_birth = #{dateOfBirth},
+        </if>
+        <if test="null != hometown and hometown != ''">
+        hometown = #{hometown},
+        </if>
+        <if test="null != ethnicity and ethnicity != ''">
+        ethnicity = #{ethnicity},
+        </if>
+        <if test="null != occupation and occupation != ''">
+        occupation = #{occupation},
+        </if>
+        <if test="null != placeOfEmployment and placeOfEmployment != ''">
+        place_of_employment = #{placeOfEmployment},
+        </if>
+        <if test="null != cccd and cccd != ''">
+        cccd = #{cccd},
+        </if>
+        <if test="null != dateOfRegistrationForPermanentResidence and dateOfRegistrationForPermanentResidence != ''">
+        date_of_issue_and_place_of_issue = #{dateOfRegistrationForPermanentResidence},
+        </if>
+        <if test="null != previousPlaceOfPermanentResidence and previousPlaceOfPermanentResidence != ''">
+        date_of_registration_for_permanent_residence = #{previousPlaceOfPermanentResidence},
+        </if>
+        <if test="null != previousPlaceOfPermanentResidence and previousPlaceOfPermanentResidence != ''">
+        previous_place_of_permanent_residence = #{previousPlaceOfPermanentResidence},
+        </if>
+        <if test="null != householdId and householdId != ''">
+        household_id = #{householdId},
+        </if>
+        <if test="null != relationship and relationship != ''">
+        relationship = #{relationship}
+        </if>
+        WHERE id = #{id}
+    </update>
+
+    <sql id="select">
+        SELECT
+            id,
+            p_id,
+            m_id,
+            full_name,
+            date_of_birth,
+            hometown,
+            ethnicity,
+            occupation,
+            place_of_employment,
+            cccd,
+            date_of_issue_and_place_of_issue,
+            date_of_registration_for_permanent_residence,
+            previous_place_of_permanent_residence,
+            household_id,
+            relationship
+        FROM resident
+
+    </sql>
+    <sql id="filter">
+        WHERE TRUE
+    </sql>
+
+    <select id="listResident" parameterType="org.cnpm.api.persistence.dto.ResidentReq" resultMap="residentRes">
+        <include refid="select"/>
+        <include refid="filter"/>
+    </select>
+
+    <select id="totalResident" parameterType="org.cnpm.api.persistence.dto.ResidentReq" resultMap="residentRes">
+        SELECT count(A.id)
+        FROM (
+        <include refid="select"/>
+        <include refid="filter"/>
+        ) A
+
+    </select>
+</mapper>

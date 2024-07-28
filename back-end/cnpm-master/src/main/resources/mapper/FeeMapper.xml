@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.cnpm.api.persistence.mapper.FeeMapper">
+
+    <resultMap id="feeRes" type="org.cnpm.api.controller.dto.res.FeeRes">
+        <result column="no" property="no"/>
+        <result column="id" property="id"/>
+        <result column="fee_nm" property="feeNm"/>
+        <result column="fee_amount" property="feeAmount"/>
+        <result column="frequency_of_year" property="frequencyOfYear"/>
+        <result column="year" property="year"/>
+    </resultMap>
+
+    <sql id="paging">
+        <if test="isPaging == true">
+            LIMIT #{limit}
+            OFFSET #{offset}
+        </if>
+    </sql>
+    <sql id="select">
+        SELECT
+            A.id,
+            A.fee_nm,
+            A.fee_amount,
+            A.frequency_of_year,
+            A.year
+        FROM fee A
+    </sql>
+
+<!--    ROW_NUMBER () OVER (ORDER BY <include refid="order"></include>) as no-->
+
+    <select id="list" parameterType="org.cnpm.api.persistence.dto.FeeReq" resultMap="feeRes">
+        <include refid="select_with_no"/>
+        <include refid="paging"/>
+    </select>
+
+    <sql id="select_with_no">
+        SELECT
+            A.*
+        , ROW_NUMBER () OVER (ORDER BY <include refid="order"/>) as no
+        FROM (
+            <include refid="select"/>
+        ) A
+        <include refid="filter"/>
+    </sql>
+
+    <sql id="order">
+        <choose>
+            <when test="orderBy == 'fee_nm'">
+                fee_nm
+            </when>
+
+            <when test="orderBy == 'fee_amount'">
+                fee_amount
+            </when>
+
+            <when test="orderBy == 'frequency_of_year'">
+                frequency_of_year
+            </when>
+
+            <when test="orderBy == 'year'">
+                year
+            </when>
+
+            <otherwise>
+                fee_nm
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="orderTp == 'DESC' or orderTp == 'desc'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="filter">
+        WHERE TRUE
+        <if test="keyword != null and keyword != ''">
+            AND fee_nm like CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="null != year">
+            AND year = #{year}
+        </if>
+<!--        <if test="null != dateFrom and null != dateTo">-->
+<!--            AND -->
+<!--        </if>-->
+<!--        todo-->
+
+    </sql>
+
+    <select id="total"
+            parameterType="org.cnpm.api.persistence.dto.FeeReq"
+            resultType="int">
+        SELECT COUNT(*)
+        FROM (
+        <include refid="select_filter"/>
+        ) TMP
+    </select>
+
+    <sql id="select_filter">
+        <include refid="select"/>
+        <include refid="filter"/>
+    </sql>
+
+    <insert id="insert" parameterType="org.cnpm.api.persistence.dto.FeeReq">
+        INSERT INTO fee
+        (
+        fee_nm,
+        fee_amount,
+        frequency_of_year,
+        year
+        )
+        VALUES
+        (
+        #{feeNm},
+        #{feeAmount},
+        #{frequencyOfYear},
+        #{year}
+        )
+    </insert>
+
+    <update id="update" parameterType="org.cnpm.api.persistence.dto.FeeReq">
+        UPDATE fee
+        SET
+            fee_nm = #{feeNm},
+            fee_amount = #{feeAmount},
+            frequency_of_year = #{frequencyOfYear},
+            year = #{year}
+        WHERE id = #{id}
+    </update>
+
+
+    <delete id="delete" parameterType="java.util.List">
+        DELETE FROM fee
+        WHERE id IN
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

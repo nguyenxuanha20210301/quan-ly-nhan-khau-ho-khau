@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.cnpm.api.persistence.mapper.UserMapper">
+
+
+    <resultMap id="fullUserResult" type="org.cnpm.api.persistence.dto.User">
+        <result column="user_id" property="userId"/>
+        <result column="email" property="email"/>
+        <result column="user_nm" property="userNm"/>
+        <result column="user_pw" property="userPw"/>
+        <result column="tel_num" property="telNum"/>
+        <result column="user_tp" property="userTp"/>
+
+    </resultMap>
+    <sql id="select_all">
+        SELECT
+        user_id,
+        email,
+        user_nm,
+        user_pw,
+        tel_num,
+        user_tp
+    </sql>
+
+    <select id="selectByEmail" parameterType="org.cnpm.api.persistence.dto.User" resultMap="fullUserResult">
+        <include refid="select_all"/>
+        FROM user
+        WHERE email = #{email}
+        LIMIT 1
+    </select>
+
+    <select id="listUser" resultMap="fullUserResult">
+        <include refid="select_all"/>
+        FROM user
+    </select>
+
+</mapper>

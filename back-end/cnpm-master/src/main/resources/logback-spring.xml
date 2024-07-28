@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- log file path -->
+    <property name="LOG_PATH" value="logs"/>
+    <!-- log level -->
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
+    <!-- log file name -->
+    <property name="LOG_FILE_NAME" value="cnpm_log"/>
+    <!-- LOG PATTERN -->
+    <property name="LOG_PATTERN" value="%d{[yy-MM-dd HH:mm:ss]} %highlight([%-5level]) %cyan([%logger{0}:%line]) %msg%n"/>
+    <!-- CONSOLE LOG PATTERN : gray, blue, cyan, green, magenta, red, yellow, boldBlue... -->
+    <property name="CONSOLE_LOG_PATTERN" value="%d{[yyyy.MM.dd HH:mm:ss]} %highlight([%-5level]) %magenta([%logger{36}]) %m%n" />
+
+    <!-- console log -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- log file -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/error/${LOG_FILE_NAME}_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/error/${LOG_FILE_NAME}_error.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="error" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="file_error"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <root level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="file"/>
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

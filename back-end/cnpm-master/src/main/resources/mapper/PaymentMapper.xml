@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.cnpm.api.persistence.mapper.PaymentMapper">
+<!--    todo-->
+<!--    <resultMap id="" type="">-->
+<!--&lt;!&ndash;        todo&ndash;&gt;-->
+<!--        <result column="" property=""/>-->
+<!--    </resultMap>-->
+
+
+    <select id="listFeeDetail">
+<!--     fixme   example fee detail-->
+        SELECT
+            A.id,
+            A.head_of_household_id,
+            D.full_name as head_of_household_nm,
+            B.amount_paid,
+            C.id as fee_id,
+            C.fee_nm,
+            C.fee_amount
+        FROM household A
+        LEFT JOIN payment B ON A.id = B.household_id
+        LEFT JOIN fee C ON B.fee = C.id
+        LEFT JOIN resident D ON A.head_of_household_id = D.id
+        WHERE TRUE AND C.id = #{feeId}
+    </select>
+
+    <select id="householdFeeDetail">
+        SELECT
+            A.id,
+            A.head_of_household_id,
+            D.full_name as head_of_household_nm,
+            B.amount_paid,
+            C.id as fee_id,
+            C.fee_nm,
+            C.fee_amount
+        FROM household A
+        LEFT JOIN payment B ON A.id = B.household_id
+        LEFT JOIN fee C ON B.fee = C.id
+        LEFT JOIN resident D ON A.head_of_household_id = D.id
+        WHERE TRUE AND A.id = #{id}
+    </select>
+
+<!--    <select id="">-->
+
+<!--    </select>-->
+
+
+
+
+    <insert id="insert">
+        INSERT INTO payment
+        (
+            household_id,
+            fee,
+            amount_paid,
+            date_of_payment
+        )
+        VALUES
+        (
+            #{householdId},
+            #{fee},
+            #{amountPaid},
+            #{dateOfPayment}
+        )
+    </insert>
+    <update id="update">
+        UPDATE payment
+        SET
+            id = #{id},
+            household_id = #{householdId},
+            fee = #{fee},
+            amount_paid = #{amountPaid},
+            date_of_payment = #{dateOfPayment}
+        WHERE id = #{id}
+
+    </update>
+
+</mapper>

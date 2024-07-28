@@ -1,0 +1,93 @@
+# ----------------------------------------
+# Server Info
+# ----------------------------------------
+server:
+  port: 6789
+  servlet:
+    context-path: /
+
+# ----------------------------------------
+# Spring Setting
+# ----------------------------------------
+spring:
+  profiles:
+    active: dev
+  application:
+    name: cnpm
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB
+
+      #  jpa:
+#    show-sql: false
+
+# ----------------------------------------
+# SpringDoc Setting
+# ----------------------------------------
+spring-doc:
+  api-docs:
+    path: /api-docs
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    groups-order:  DESC
+    operations-sorter: method
+    disable-swagger-default-url: true
+    doc-expansion: none
+  show-actuator: false
+
+# ----------------------------------------
+# Logging
+# ----------------------------------------
+logging:
+  level:
+    root: INFO
+    jdbc: INFO
+    jdbc.sqlonly: OFF
+    jdbc.sqltiming: INFO
+    jdbc.resultset: OFF
+    #    Disable this one to dont print resutl table
+    jdbc.resultsettable: INFO
+    jdbc.audit: OFF
+    jdbc.connection: OFF
+
+
+
+security:
+  basic:
+    enabled: false
+
+# ----------------------------------------
+# Mybatis
+# ----------------------------------------
+mybatis:
+  type-handlers-package: org.cnpm.api.persistence.typehandler
+
+
+conf:
+  pwdDays: 60
+
+batch:
+  max-thread: 20
+
+api:
+  prefix: /api/v1
+
+
+management:
+  security:
+    enabled: false
+storage:
+  storage_dir_nm: storage
+  files_dir_nm: files
+  sample_dir_nm: samples
+
+jwt:
+  secret-key: secret-key-for-test
+  access-token-validity: 2592000
+  refresh-token-validity: 86400
+  issuer: org.cnpm

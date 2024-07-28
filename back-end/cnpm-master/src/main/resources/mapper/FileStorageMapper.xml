@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.cnpm.api.persistence.mapper.FileStorageMapper">
+
+
+    <resultMap id="fileStorage" type="org.cnpm.api.persistence.dto.FileStorage">
+        <result column="file_id" property="fileId"/>
+        <result column="file_nm" property="fileNm"/>
+        <result column="file_rel_loc" property="fileRelLoc"/>
+    </resultMap>
+
+
+    <select id="select"
+            parameterType="org.cnpm.api.persistence.dto.FileStorage"
+            resultMap="fileStorage"
+    >
+        <include refid="select_all"/>
+        FROM file
+        WHERE file_id = #{fileId}
+    </select>
+
+    <sql id="select_all">
+        SELECT
+        file_id,
+        file_nm,
+        file_rel_loc
+    </sql>
+
+
+    <insert id="insert"
+            parameterType="org.cnpm.api.persistence.dto.FileStorage"
+            useGeneratedKeys="true" keyColumn="file_id" keyProperty="fileId">
+        INSERT INTO file
+        (
+        file_nm,
+        file_rel_loc
+        )
+        VALUES (
+        #{fileNm}
+        , #{fileRelLoc}
+        )
+    </insert>
+
+    <insert id="insertList"
+            parameterType="list"
+            useGeneratedKeys="true" keyColumn="file_id" keyProperty="fileId">
+        INSERT INTO file
+        (
+        file_nm,
+        file_rel_loc
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.fileNm}
+            , #{item.fileRelLoc}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delete"
+            parameterType="org.cnpm.api.persistence.dto.FileStorage">
+        DELETE FROM file
+        WHERE file_id = #{fileId}
+    </delete>
+
+    <update id="updateFileNm"
+            parameterType="org.cnpm.api.persistence.dto.FileStorage">
+        UPDATE file
+        SET
+        file_nm = #{fileNm}
+        WHERE file_id = #{fileId}
+    </update>
+</mapper>
